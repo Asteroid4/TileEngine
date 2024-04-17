@@ -25,3 +25,21 @@ kotlin {
 application {
     mainClass = "asteroid4.MainKt"
 }
+
+tasks.jar {
+    manifest {
+        attributes ["Main-Class"] = "asteroid4.MainKt"
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from(sourceSets.main.get().output)
+
+    dependsOn(configurations.runtimeClasspath)
+
+    from({
+        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+    })
+
+    archiveFileName = "TileEngine.jar"
+}

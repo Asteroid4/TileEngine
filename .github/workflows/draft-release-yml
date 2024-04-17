@@ -1,0 +1,29 @@
+name: Draft Release
+run-name: ${{ github.actor }} is drafting a release from main
+on:
+  push:
+    tags:
+        - '*'
+env:
+  GITHUB_WORKSPACE:
+    /home/runner/work/Asteroid4/TileEngine
+jobs:
+  draft-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close repository
+        uses: actions/checkout@4
+      - name: Build jar using gradle
+        run: ./gradlew build
+      - name: Create zip archive with jar and start scripts
+        run: |
+            mkdir TileEngine-${{ github.ref_name }}
+            mv build/libs/TileEngine.jar TileEngine-${{ github.ref_name }}
+            mv start-scripts/* TileEngine
+            zip -r TileEngine-${{ github.ref_name }}.zip TileEngine
+      - name: Draft release with attached zip archive
+        uses: ncipollo/release-action@v1.14.0
+        with:
+            artifacts: TileEngine-${{ github.ref_name }}.zip
+            draft: true
+            generateReleaseNotes: true
