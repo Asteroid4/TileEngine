@@ -10,7 +10,8 @@ import kotlin.time.measureTime
 fun main() {
     verifyGameDataFolderExists()
     while (true) {
-        if (ProgramData.SCREEN_MANAGER.isInUnpausedGame()) {
+        if (ProgramData.SCREEN_MANAGER.shouldBeInUnpausedGame()) {
+            if (ProgramData.GAME_MANAGER.currentWorld == null) ProgramData.LOGGER.printErr("World not initialized during gameplay!")
             val tickDelta = measureTime {
                 ProgramData.GAME_MANAGER.tick()
             }.toDouble(DurationUnit.MILLISECONDS)
@@ -25,7 +26,6 @@ fun main() {
 fun verifyGameDataFolderExists() {
     val basePath = ProgramData.WORKING_DIR + File.separatorChar + "TileEngineData" + File.separatorChar
     verifyFolderExists(basePath + "mods")
-    verifyFolderExists(basePath + "worlds")
 }
 
 fun verifyFolderExists(path : String) {
@@ -43,4 +43,5 @@ object ProgramData {
     val SCREEN_MANAGER = ScreenManager(STARTING_WIDTH, STARTING_HEIGHT)
     val GAME_MANAGER = GameManager()
     val MOD_LOADER = ModLoader()
+    val LOGGER = Logger()
 }

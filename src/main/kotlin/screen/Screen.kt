@@ -1,6 +1,7 @@
 package asteroid4.screen
 
 import asteroid4.ProgramData
+import java.awt.Graphics
 import java.awt.event.ActionEvent
 import javax.swing.AbstractAction
 import javax.swing.JButton
@@ -8,7 +9,7 @@ import javax.swing.JLabel
 import javax.swing.JPanel
 import kotlin.system.exitProcess
 
-class GameScreen(startingScreen : ScreenType) : JPanel() {
+class Screen(startingScreen : ScreenType) : JPanel() {
     var currentScreen = startingScreen
         set(value) {
             this.removeAll()
@@ -72,13 +73,9 @@ class GameScreen(startingScreen : ScreenType) : JPanel() {
                     this.add(backButton)
                 }
 
-                ScreenType.IN_GAME -> {
-                    exitProcess(1)
-                }
+                ScreenType.IN_GAME -> {}
 
-                ScreenType.EXIT -> {
-                    exitProcess(0)
-                }
+                ScreenType.EXIT -> exitProcess(0)
             }
             this.validate()
             this.repaint()
@@ -87,6 +84,13 @@ class GameScreen(startingScreen : ScreenType) : JPanel() {
 
     init {
         currentScreen = startingScreen
+    }
+
+    override fun update(g: Graphics?) {
+        if (currentScreen == ScreenType.IN_GAME) {
+            return
+        }
+        super.update(g)
     }
 
     private fun screenChangeButton(name : String, newScreen : ScreenType) : JButton {
