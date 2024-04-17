@@ -1,8 +1,12 @@
 package asteroid4
 
 import asteroid4.game.GameManager
+import asteroid4.game.world.Tile
 import asteroid4.modloader.ModLoader
+import asteroid4.registry.Registry
+import asteroid4.registry.RegistryKey
 import asteroid4.screen.ScreenManager
+import java.awt.Image
 import java.io.File
 import kotlin.time.DurationUnit
 import kotlin.time.measureTime
@@ -44,4 +48,9 @@ object ProgramData {
     val GAME_MANAGER = GameManager()
     val MOD_LOADER = ModLoader()
     val LOGGER = Logger()
+}
+
+object Registries {
+    val TILE_REGISTRY = Registry<Tile>(RegistryKey("required", "unraveling_fabric"), Tile("unraveling_fabric"))
+    val IMAGE_REGISTRY = Registry<Image>(RegistryKey("required", "unraveling_fabric"), Image())
 }
