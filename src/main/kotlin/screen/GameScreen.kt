@@ -53,6 +53,13 @@ class GameScreen(startingScreen : ScreenType) : JPanel() {
                     val title = JLabel("Mods")
                     this.add(title)
 
+                    val refreshButton = JButton(object: AbstractAction("refresh") {
+                        override fun actionPerformed(e: ActionEvent?) {
+                            ProgramData.MOD_LOADER.refreshLoadedMods()
+                        }
+                    })
+                    this.add(refreshButton)
+
                     val backButton = screenChangeButton("Back", ScreenType.MAIN_MENU)
                     this.add(backButton)
                 }
