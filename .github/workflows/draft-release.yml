@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Close repository
-        uses: actions/checkout@4
+        uses: actions/checkout@v4.1.1
       - name: Build jar using gradle
         run: ./gradlew build
       - name: Create zip archive with jar and start scripts
