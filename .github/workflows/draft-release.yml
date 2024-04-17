@@ -16,11 +16,6 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v4.1.1
-      - name: Fetch latest commit
-        id: lastcommit
-        uses: nmbgeek/github-action-get-latest-commit@main
-        with:
-          repository: ${{ github.repository }}
       - name: Build jar using gradle
         run: ./gradlew build
       - name: Create zip archive with jar and start scripts
@@ -33,7 +28,7 @@ jobs:
         uses: ncipollo/release-action@v1.14.0
         with:
             tag: ${{ inputs.releaseName }}
-            commit: ${{ steps.lastcommit.outputs.shorthash }}
+            commit: main
             artifacts: TileEngine-${{ inputs.releaseName }}.zip
             draft: true
             generateReleaseNotes: true
