@@ -1,4 +1,4 @@
-package asteroid4.game
+package asteroid4.game.world
 
 data class Chunk(val tiles : Array<Array<Tile>>) {
     init {
