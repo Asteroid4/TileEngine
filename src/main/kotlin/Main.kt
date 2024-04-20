@@ -2,12 +2,16 @@ package asteroid4
 
 import asteroid4.game.GameManager
 import asteroid4.game.world.Tile
+import asteroid4.game.world.generator.NullWorldGenerator
+import asteroid4.game.world.generator.WorldGenerator
 import asteroid4.modloader.ModLoader
 import asteroid4.registry.Registry
 import asteroid4.registry.RegistryKey
 import asteroid4.screen.ScreenManager
-import java.awt.Image
+import java.awt.image.BufferedImage
 import java.io.File
+import java.io.IOException
+import javax.imageio.ImageIO
 import kotlin.time.DurationUnit
 import kotlin.time.measureTime
 
@@ -43,6 +47,8 @@ object ProgramData {
     const val MAX_TPS = 20
     private const val STARTING_WIDTH = 768
     private const val STARTING_HEIGHT = 512
+    const val TILE_SIZE = 64
+    const val MAX_HEALTH = 100f
 
     val SCREEN_MANAGER = ScreenManager(STARTING_WIDTH, STARTING_HEIGHT)
     val GAME_MANAGER = GameManager()
@@ -51,6 +57,16 @@ object ProgramData {
 }
 
 object Registries {
-    val TILE_REGISTRY = Registry<Tile>(RegistryKey("required", "unraveling_fabric"), Tile("unraveling_fabric"))
-    val IMAGE_REGISTRY = Registry<Image>(RegistryKey("required", "unraveling_fabric"), Image())
+    val IMAGE_REGISTRY : Registry<BufferedImage>
+    val TILE_REGISTRY = Registry(Tile(false))
+    val WORLD_GENERATOR_REGISTRY = Registry<WorldGenerator>(NullWorldGenerator())
+
+    init {
+        var img : BufferedImage? = null;
+        try {
+            img = ImageIO.read(ClassLoader.getSystemResource("unraveling_fabric.png"))
+        } catch (e : IOException) {}
+        IMAGE_REGISTRY = Registry(img!!)
+        IMAGE_REGISTRY[RegistryKey("required", "tile", "air")]
+    }
 }

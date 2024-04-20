@@ -1,5 +1,6 @@
 package asteroid4.game
 
+import asteroid4.Registries
 import asteroid4.game.world.Tile
 import asteroid4.game.world.World
 import java.awt.Image
@@ -11,11 +12,11 @@ class GameManager() {
         if (currentWorld == null) return
     }
 
-    fun getTile(x : Long, y : Long) : Tile? {
-        return currentWorld?.chunks?.get(Pair(x / 16, y / 16))?.get((x % 16).toInt(), (y % 16).toInt())
+    fun getTile(blockPos : IntPosition) : Tile? {
+        return Registries.TILE_REGISTRY[currentWorld?.chunks?.get(blockPos / 16)?.get(IntPosition(blockPos.x % 16, blockPos.y % 16))]
     }
 
-    fun getTileImage(x : Long, y : Long) : Image? {
-        getTile(x, y).name
+    fun getTileImage(blockPos : IntPosition) : Image? {
+        return Registries.IMAGE_REGISTRY[currentWorld?.chunks?.get(blockPos / 16)?.get(IntPosition(blockPos.x % 16, blockPos.y % 16))]
     }
 }
