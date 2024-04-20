@@ -1,13 +1,13 @@
 package asteroid4.registry
 
-class Registry<T>() {
+class Registry<T>(private val default : T) {
     private val contents = HashMap<RegistryKey, T>()
-
-    constructor(key : RegistryKey, value : T) : this() {
-        register(key, value)
-    }
 
     fun register(key: RegistryKey, value: T) {
         contents[key] = value
+    }
+
+    operator fun get(key: RegistryKey?) : T {
+        return contents.getOrDefault(key, default)
     }
 }

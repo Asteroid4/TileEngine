@@ -1,15 +1,24 @@
 package asteroid4.screen
 
 import asteroid4.ProgramData
+import asteroid4.Registries
+import asteroid4.game.FloatPosition
+import asteroid4.game.IntPosition
+import asteroid4.game.world.World
+import asteroid4.game.world.generator.NullWorldGenerator
+import asteroid4.registry.RegistryKey
 import java.awt.Graphics
+import java.awt.Graphics2D
+import java.awt.Image
 import java.awt.event.ActionEvent
+import java.awt.image.ImageObserver
 import javax.swing.AbstractAction
 import javax.swing.JButton
 import javax.swing.JLabel
 import javax.swing.JPanel
 import kotlin.system.exitProcess
 
-class Screen(startingScreen : ScreenType) : JPanel() {
+class Screen(startingScreen: ScreenType): JPanel() {
     var currentScreen = startingScreen
         set(value) {
             this.removeAll()
@@ -37,6 +46,9 @@ class Screen(startingScreen : ScreenType) : JPanel() {
                 ScreenType.SINGLEPLAYER_MENU -> {
                     val title = JLabel("Singleplayer")
                     this.add(title)
+
+                    val inGameButton = screenChangeButton("IN_GAME", ScreenType.IN_GAME)
+                    this.add(inGameButton)
 
                     val backButton = screenChangeButton("Back", ScreenType.MAIN_MENU)
                     this.add(backButton)
@@ -73,7 +85,9 @@ class Screen(startingScreen : ScreenType) : JPanel() {
                     this.add(backButton)
                 }
 
-                ScreenType.IN_GAME -> {}
+                ScreenType.IN_GAME -> {
+                    ProgramData.GAME_MANAGER.currentWorld = World(0, NullWorldGenerator())
+                }
 
                 ScreenType.EXIT -> exitProcess(0)
             }
@@ -86,18 +100,49 @@ class Screen(startingScreen : ScreenType) : JPanel() {
         currentScreen = startingScreen
     }
 
-    override fun update(g: Graphics?) {
+    override fun paintComponent(g: Graphics) {
+        super.paintComponent(g)
         if (currentScreen == ScreenType.IN_GAME) {
-            return
+            val g2 = g as Graphics2D
+            val playerIntPos = ProgramData.GAME_MANAGER.currentWorld?.playerLocation?.truncate()
+            if (playerIntPos != null) {
+                for (chunkX in (playerIntPos.x-2)..(playerIntPos.x+2)) {
+                    for (chunkY in (playerIntPos.y-2)..(playerIntPos.y+2)) {
+                        renderChunk(g2, chunkX, chunkY)
+                    }
+                }
+            }
+            renderPlayer(g2)
         }
-        super.update(g)
     }
 
-    private fun screenChangeButton(name : String, newScreen : ScreenType) : JButton {
+    private fun renderPlayer(g2: Graphics2D) {
+        g2.drawImage(Registries.IMAGE_REGISTRY[RegistryKey("required", "entity", "player")], getScreenCenter().x - ProgramData.TILE_SIZE / 2, getScreenCenter().y - ProgramData.TILE_SIZE, ProgramData.TILE_SIZE, ProgramData.TILE_SIZE * 2, ImageObserver(fun(_: Image, _: Int, _: Int, _: Int, _: Int, _: Int): Boolean {return false}))
+    }
+
+    private fun renderChunk(g2: Graphics2D, chunkX: Int, chunkY: Int) {
+        for (x in 0..15) {
+            for (y in 0..15) {
+                val tilePosition = IntPosition((chunkX * 16) + x, (chunkY * 16) + y)
+                val tileRenderingPosition = getTileRenderLocation(tilePosition)
+                g2.drawImage(ProgramData.GAME_MANAGER.getTileImage(tilePosition), tileRenderingPosition.x+100, tileRenderingPosition.y+100, ProgramData.TILE_SIZE, ProgramData.TILE_SIZE, ImageObserver(fun(_: Image, _: Int, _: Int, _: Int, _: Int, _: Int): Boolean {return false}))
+            }
+        }
+    }
+
+    private fun screenChangeButton(name: String, newScreen: ScreenType): JButton {
         return JButton(object: AbstractAction(name) {
             override fun actionPerformed(e: ActionEvent?) {
                 currentScreen = newScreen
             }
         })
+    }
+
+    private fun getScreenCenter(): IntPosition {
+        return IntPosition(width / 2, height / 2)
+    }
+
+    private fun getTileRenderLocation(literalLocation: IntPosition): IntPosition {
+        return literalLocation
     }
 }
