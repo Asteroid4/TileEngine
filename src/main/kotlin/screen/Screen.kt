@@ -68,7 +68,7 @@ class Screen(startingScreen: ScreenType): JPanel() {
 
                     val refreshButton = JButton(object: AbstractAction("refresh") {
                         override fun actionPerformed(e: ActionEvent?) {
-                            ProgramData.MOD_LOADER.refreshLoadedMods()
+                            ProgramData.SCRIPT_LOADER.refresh()
                         }
                     })
                     this.add(refreshButton)

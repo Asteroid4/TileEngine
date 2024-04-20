@@ -4,10 +4,10 @@ import asteroid4.game.GameManager
 import asteroid4.game.world.Tile
 import asteroid4.game.world.generator.NullWorldGenerator
 import asteroid4.game.world.generator.WorldGenerator
-import asteroid4.modloader.ModLoader
 import asteroid4.registry.Registry
 import asteroid4.registry.RegistryKey
 import asteroid4.screen.ScreenManager
+import asteroid4.modloader.ScriptLoader
 import java.awt.image.BufferedImage
 import java.io.File
 import java.io.IOException
@@ -52,7 +52,7 @@ object ProgramData {
 
     val SCREEN_MANAGER = ScreenManager(STARTING_WIDTH, STARTING_HEIGHT)
     val GAME_MANAGER = GameManager()
-    val MOD_LOADER = ModLoader()
+    val SCRIPT_LOADER = ScriptLoader()
     val LOGGER = Logger()
 }
 
