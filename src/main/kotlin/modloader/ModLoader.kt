@@ -36,7 +36,7 @@ class ModLoader {
             }
         }
     }
-
+    
     private inline fun <reified T> loadFolderToRegistry(modInfo : ModInfo, modInfoDir : File, registry : Registry<T>, typeName : String, extension : String) {
         val dir = File(modInfoDir.path + File.separatorChar + typeName)
         if (dir.exists()) {
