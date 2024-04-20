@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 import java.awt.Image
 
 @Serializable
-open class Tile() {
+open class Tile(val isInvisible: Boolean) {
     fun interact() {}
 
     fun destroy() {}

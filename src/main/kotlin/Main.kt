@@ -48,6 +48,7 @@ object ProgramData {
     private const val STARTING_WIDTH = 768
     private const val STARTING_HEIGHT = 512
     const val TILE_SIZE = 64
+    const val MAX_HEALTH = 100f
 
     val SCREEN_MANAGER = ScreenManager(STARTING_WIDTH, STARTING_HEIGHT)
     val GAME_MANAGER = GameManager()
@@ -57,7 +58,7 @@ object ProgramData {
 
 object Registries {
     val IMAGE_REGISTRY : Registry<BufferedImage>
-    val TILE_REGISTRY = Registry(Tile())
+    val TILE_REGISTRY = Registry(Tile(false))
     val WORLD_GENERATOR_REGISTRY = Registry<WorldGenerator>(NullWorldGenerator())
 
     init {

@@ -104,7 +104,7 @@ class Screen(startingScreen: ScreenType): JPanel() {
         super.paintComponent(g)
         if (currentScreen == ScreenType.IN_GAME) {
             val g2 = g as Graphics2D
-            val playerIntPos = ProgramData.GAME_MANAGER.currentWorld?.playerLocation?.truncate()
+            val playerIntPos = ProgramData.GAME_MANAGER.currentWorld?.player?.position?.truncate()
             if (playerIntPos != null) {
                 for (chunkX in (playerIntPos.x-2)..(playerIntPos.x+2)) {
                     for (chunkY in (playerIntPos.y-2)..(playerIntPos.y+2)) {
@@ -117,15 +117,31 @@ class Screen(startingScreen: ScreenType): JPanel() {
     }
 
     private fun renderPlayer(g2: Graphics2D) {
-        g2.drawImage(Registries.IMAGE_REGISTRY[RegistryKey("required", "entity", "player")], getScreenCenter().x - ProgramData.TILE_SIZE / 2, getScreenCenter().y - ProgramData.TILE_SIZE, ProgramData.TILE_SIZE, ProgramData.TILE_SIZE * 2, ImageObserver(fun(_: Image, _: Int, _: Int, _: Int, _: Int, _: Int): Boolean {return false}))
+        g2.drawImage(
+            Registries.IMAGE_REGISTRY[RegistryKey("required", "entity", "player")],
+            getScreenCenter().x - ProgramData.TILE_SIZE / 2,
+            getScreenCenter().y - ProgramData.TILE_SIZE,
+            ProgramData.TILE_SIZE,
+            ProgramData.TILE_SIZE * 2,
+            ImageObserver(fun(_: Image, _: Int, _: Int, _: Int, _: Int, _: Int): Boolean { return false })
+        )
     }
 
     private fun renderChunk(g2: Graphics2D, chunkX: Int, chunkY: Int) {
         for (x in 0..15) {
             for (y in 0..15) {
                 val tilePosition = IntPosition((chunkX * 16) + x, (chunkY * 16) + y)
-                val tileRenderingPosition = getTileRenderLocation(tilePosition)
-                g2.drawImage(ProgramData.GAME_MANAGER.getTileImage(tilePosition), tileRenderingPosition.x+100, tileRenderingPosition.y+100, ProgramData.TILE_SIZE, ProgramData.TILE_SIZE, ImageObserver(fun(_: Image, _: Int, _: Int, _: Int, _: Int, _: Int): Boolean {return false}))
+                if (ProgramData.GAME_MANAGER.getTile(tilePosition)?.isInvisible == false) {
+                    val tileRenderingPosition = getTileRenderLocation(tilePosition)
+                    g2.drawImage(
+                        ProgramData.GAME_MANAGER.getTileImage(tilePosition),
+                        tileRenderingPosition.x + 100,
+                        tileRenderingPosition.y + 100,
+                        ProgramData.TILE_SIZE,
+                        ProgramData.TILE_SIZE,
+                        ImageObserver(fun(_: Image, _: Int, _: Int, _: Int, _: Int, _: Int): Boolean { return false })
+                    )
+                }
             }
         }
     }
