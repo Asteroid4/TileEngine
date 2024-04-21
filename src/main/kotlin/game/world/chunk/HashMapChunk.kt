@@ -3,7 +3,7 @@ package asteroid4.game.world.chunk
 import asteroid4.game.IntPosition
 import asteroid4.registry.RegistryKey
 
-class HashMapChunk(var tiles: HashMap<IntPosition, RegistryKey>?) : AbstractChunk {
+class HashMapChunk(private var tiles: HashMap<IntPosition, RegistryKey>?) : Chunk {
     private var default: RegistryKey? = null
 
     constructor(newDefault: RegistryKey) : this(null) {
