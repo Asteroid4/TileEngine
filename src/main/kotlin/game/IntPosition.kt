@@ -5,12 +5,24 @@ data class IntPosition(val x: Int, val y: Int) {
         return IntPosition(this.x + pos2.x, this.y + pos2.y)
     }
 
+    operator fun plus(pos2: FloatPosition): FloatPosition {
+        return FloatPosition(this.x + pos2.x, this.y + pos2.y)
+    }
+
     operator fun minus(pos2: IntPosition): IntPosition {
         return IntPosition(this.x - pos2.x, this.y - pos2.y)
     }
 
+    operator fun minus(pos2: FloatPosition): FloatPosition {
+        return FloatPosition(this.x - pos2.x, this.y - pos2.y)
+    }
+
     operator fun times(scalar: Int): IntPosition {
         return IntPosition(this.x * scalar, this.y * scalar)
+    }
+
+    operator fun times(scalar: Float): FloatPosition {
+        return FloatPosition(this.x * scalar, this.y * scalar)
     }
 
     operator fun div(scalar: Int): IntPosition {

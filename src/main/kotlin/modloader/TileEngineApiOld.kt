@@ -15,12 +15,12 @@ import java.awt.image.BufferedImage
 import java.io.IOException
 import javax.imageio.ImageIO
 
-class TileEngineLibrary() : TwoArgFunction() {
-    override fun call(modName: LuaValue?, env: LuaValue?): LuaValue {
+class TileEngineApiOld() : TwoArgFunction() {
+    override fun call(modname: LuaValue?, env: LuaValue?): LuaValue {
         val library = tableOf()
         library.set("tile", TileFunction())
         library.set("worldgenerator", WorldGeneratorFunction())
-        env?.set("tile-engine", library)
+        env?.set("tileengineapi", library)
         return library
     }
 

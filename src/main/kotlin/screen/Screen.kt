@@ -135,8 +135,8 @@ class Screen(startingScreen: ScreenType): JPanel() {
                     val tileRenderingPosition = getTileRenderLocation(tilePosition)
                     g2.drawImage(
                         ProgramData.GAME_MANAGER.getTileImage(tilePosition),
-                        tileRenderingPosition.x + 100,
-                        tileRenderingPosition.y + 100,
+                        tileRenderingPosition.x,
+                        tileRenderingPosition.y,
                         ProgramData.TILE_SIZE,
                         ProgramData.TILE_SIZE,
                         ImageObserver(fun(_: Image, _: Int, _: Int, _: Int, _: Int, _: Int): Boolean { return false })
@@ -159,6 +159,8 @@ class Screen(startingScreen: ScreenType): JPanel() {
     }
 
     private fun getTileRenderLocation(literalLocation: IntPosition): IntPosition {
-        return literalLocation
+        val playerPosition = ProgramData.GAME_MANAGER.currentWorld?.player?.position!! * (ProgramData.TILE_SIZE * 1f)
+        val screenOffset = playerPosition - (IntPosition(width, height) / 2)
+        return ((literalLocation * ProgramData.TILE_SIZE) - screenOffset).truncate()
     }
 }

@@ -8,51 +8,29 @@ import org.luaj.vm2.lib.*
 import org.luaj.vm2.lib.jse.JseBaseLib
 import org.luaj.vm2.lib.jse.JseMathLib
 import java.io.File
+import javax.script.Invocable
+import javax.script.ScriptEngine
+import javax.script.ScriptEngineManager
 
 
-class ScriptLoader {
-    //data class ActionResult(val info: String? = null, val warn: String? = null, val err: String? = null)
-
+class ScriptLoader() {
     private val loadedMods = ArrayList<String>(0)
+    private val api = TileEngineApi()
+
+    private val engineManager = ScriptEngineManager()
+    private val engine: ScriptEngine = engineManager.getEngineByName("nashorn")
 
     fun refresh() {
         loadedMods.clear()
         val files = File(ProgramData.WORKING_DIR + File.separatorChar + "TileEngineData" + File.separatorChar + "mods").listFiles().sorted().forEach { modDir ->
             if (modDir.isDirectory) {
-                val scriptFile = File(modDir.path + File.separatorChar + "script.lua")
+                val scriptFile = File(modDir.path + File.separatorChar + "script.js")
                 if (scriptFile.exists()) {
-                    runScriptInSandbox(scriptFile)
-                    loadedMods += modDir.name
+                    engine.eval(scriptFile.reader())
+                    val inv = engine as Invocable
+                    inv.invokeFunction("init", api)
                 }
             }
         }
-    }
-
-    private fun runScriptInSandbox(scriptFile: File) {
-        val sandboxGlobals = Globals()
-        sandboxGlobals.load(JseBaseLib())
-        sandboxGlobals.load(PackageLib())
-        sandboxGlobals.load(Bit32Lib())
-        sandboxGlobals.load(TableLib())
-        sandboxGlobals.load(StringLib())
-        sandboxGlobals.load(JseMathLib())
-
-        sandboxGlobals.load(DebugLib())
-        val setHook: LuaValue = sandboxGlobals.get("debug").get("sethook")
-        sandboxGlobals.set("debug", LuaValue.NIL)
-
-        val chunk = ProgramData.LUA_GLOBALS.load(scriptFile.reader(), "main", sandboxGlobals)
-        val thread = LuaThread(sandboxGlobals, chunk)
-
-        val hookFunc = object: ZeroArgFunction() {
-            override fun call(): LuaValue {
-                throw Error("${scriptFile.parentFile.name} overran resource limits.")
-            }
-        }
-        val maxInstructions = 500
-        setHook.invoke(LuaValue.varargsOf(arrayOf<LuaValue>(thread, hookFunc, LuaValue.EMPTYSTRING, LuaValue.valueOf(maxInstructions))))
-
-        val result = thread.resume(LuaValue.NIL)
-        ProgramData.LOGGER.print("${scriptFile.parentFile.name} -> $result")
     }
 }
