@@ -1,4 +1,4 @@
-package asteroid4
+package asteroid4.tileengine
 
 class Logger {
     fun print(str : String) {

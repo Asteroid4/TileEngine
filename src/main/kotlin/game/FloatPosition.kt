@@ -1,4 +1,4 @@
-package asteroid4.game
+package asteroid4.tileengine.game
 
 data class FloatPosition(val x: Float, val y: Float) {
     operator fun plus(pos2: FloatPosition): FloatPosition {
@@ -9,11 +9,23 @@ data class FloatPosition(val x: Float, val y: Float) {
         return FloatPosition(this.x - pos2.x, this.y - pos2.y)
     }
 
+    operator fun minus(pos2: IntPosition): FloatPosition {
+        return FloatPosition(this.x - pos2.x, this.y - pos2.y)
+    }
+
     operator fun times(scalar: Float): FloatPosition {
         return FloatPosition(this.x * scalar, this.y * scalar)
     }
 
+    operator fun times(scalar: Int): FloatPosition {
+        return FloatPosition(this.x * scalar, this.y * scalar)
+    }
+
     operator fun div(scalar: Float): FloatPosition {
+        return FloatPosition(this.x / scalar, this.y / scalar)
+    }
+
+    operator fun div(scalar: Int): FloatPosition {
         return FloatPosition(this.x / scalar, this.y / scalar)
     }
 

@@ -1,8 +1,9 @@
-package asteroid4.game
+package asteroid4.tileengine.game
 
-import asteroid4.Registries
-import asteroid4.game.world.Tile
-import asteroid4.game.world.World
+import asteroid4.tileengine.ProgramData
+import asteroid4.tileengine.Registries
+import asteroid4.tileengine.game.world.Tile
+import asteroid4.tileengine.game.world.World
 import java.awt.Image
 
 class GameManager() {
@@ -10,6 +11,7 @@ class GameManager() {
 
     fun tick() {
         if (currentWorld == null) return
+        ProgramData.LOGGER.print(currentWorld!!.player.position.toString())
     }
 
     fun getTile(blockPos : IntPosition) : Tile? {

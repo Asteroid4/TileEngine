@@ -1,6 +1,6 @@
-package asteroid4.screen
+package asteroid4.tileengine.screen
 
-import asteroid4.ProgramData
+import asteroid4.tileengine.ProgramData
 import java.awt.Dimension
 import javax.swing.*
 
@@ -16,7 +16,9 @@ class ScreenManager(startingWidth: Int, startingHeight: Int) {
         frame.isVisible = true
     }
 
-    fun shouldBeInUnpausedGame() : Boolean {
+    fun shouldBeInUnpausedGame(): Boolean {
         return screen.currentScreen == ScreenType.IN_GAME
     }
+
+    fun frame() = screen.repaint()
 }

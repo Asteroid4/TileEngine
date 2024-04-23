@@ -1,12 +1,11 @@
-package asteroid4.screen
+package asteroid4.tileengine.screen
 
-import asteroid4.ProgramData
-import asteroid4.Registries
-import asteroid4.game.FloatPosition
-import asteroid4.game.IntPosition
-import asteroid4.game.world.World
-import asteroid4.game.world.generator.NullWorldGenerator
-import asteroid4.registry.RegistryKey
+import asteroid4.tileengine.ProgramData
+import asteroid4.tileengine.Registries
+import asteroid4.tileengine.game.IntPosition
+import asteroid4.tileengine.game.world.World
+import asteroid4.tileengine.game.world.generator.NullWorldGenerator
+import asteroid4.tileengine.registry.RegistryKey
 import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.Image
@@ -68,7 +67,7 @@ class Screen(startingScreen: ScreenType): JPanel() {
 
                     val refreshButton = JButton(object: AbstractAction("refresh") {
                         override fun actionPerformed(e: ActionEvent?) {
-                            ProgramData.MOD_LOADER.refreshLoadedMods()
+                            ProgramData.SCRIPT_LOADER.refresh()
                         }
                     })
                     this.add(refreshButton)
@@ -135,8 +134,8 @@ class Screen(startingScreen: ScreenType): JPanel() {
                     val tileRenderingPosition = getTileRenderLocation(tilePosition)
                     g2.drawImage(
                         ProgramData.GAME_MANAGER.getTileImage(tilePosition),
-                        tileRenderingPosition.x + 100,
-                        tileRenderingPosition.y + 100,
+                        tileRenderingPosition.x,
+                        tileRenderingPosition.y,
                         ProgramData.TILE_SIZE,
                         ProgramData.TILE_SIZE,
                         ImageObserver(fun(_: Image, _: Int, _: Int, _: Int, _: Int, _: Int): Boolean { return false })
@@ -159,6 +158,8 @@ class Screen(startingScreen: ScreenType): JPanel() {
     }
 
     private fun getTileRenderLocation(literalLocation: IntPosition): IntPosition {
-        return literalLocation
+        val playerPosition = ProgramData.GAME_MANAGER.currentWorld?.player?.position!! * (ProgramData.TILE_SIZE * 1f)
+        val screenOffset = playerPosition - (IntPosition(width, height) / 2)
+        return ((literalLocation * ProgramData.TILE_SIZE) - screenOffset).truncate()
     }
 }
