@@ -2,10 +2,10 @@ package asteroid4.tileengine
 
 class Logger {
     fun print(str : String) {
-        println(str)
+        println("[TileEngine/${Thread.currentThread().name}]$str")
     }
 
     fun printErr(str : String) {
-        System.err.println(str)
+        System.err.println("[TileEngine/${Thread.currentThread().name}]$str")
     }
 }
