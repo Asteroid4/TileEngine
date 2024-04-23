@@ -16,7 +16,9 @@ class ScreenManager(startingWidth: Int, startingHeight: Int) {
         frame.isVisible = true
     }
 
-    fun shouldBeInUnpausedGame() : Boolean {
+    fun shouldBeInUnpausedGame(): Boolean {
         return screen.currentScreen == ScreenType.IN_GAME
     }
+
+    fun frame() = screen.repaint()
 }

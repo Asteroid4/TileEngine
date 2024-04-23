@@ -15,6 +15,7 @@ import javax.imageio.ImageIO
 object ProgramData {
     const val PROGRAM_NAME = "Tile Engine"
     val WORKING_DIR: String = System.getProperty("user.dir")
+    const val MAX_FPS = 60
     const val MAX_TPS = 20
     private const val STARTING_WIDTH = 768
     private const val STARTING_HEIGHT = 512
