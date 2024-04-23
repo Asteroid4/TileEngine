@@ -1,4 +1,4 @@
-package asteroid4.registry
+package asteroid4.tileengine.registry
 
 class Registry<T>(private val default: T) {
     private val contents = HashMap<RegistryKey, T>()

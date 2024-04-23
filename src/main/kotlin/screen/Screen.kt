@@ -1,12 +1,11 @@
-package asteroid4.screen
+package asteroid4.tileengine.screen
 
-import asteroid4.ProgramData
-import asteroid4.Registries
-import asteroid4.game.FloatPosition
-import asteroid4.game.IntPosition
-import asteroid4.game.world.World
-import asteroid4.game.world.generator.NullWorldGenerator
-import asteroid4.registry.RegistryKey
+import asteroid4.tileengine.ProgramData
+import asteroid4.tileengine.Registries
+import asteroid4.tileengine.game.IntPosition
+import asteroid4.tileengine.game.world.World
+import asteroid4.tileengine.game.world.generator.NullWorldGenerator
+import asteroid4.tileengine.registry.RegistryKey
 import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.Image

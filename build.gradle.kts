@@ -1,10 +1,9 @@
 plugins {
     kotlin("jvm") version "1.9.22"
-    kotlin("plugin.serialization") version "1.9.22"
     application
 }
 
-group = "asteroid4"
+group = "asteroid4.tileengine"
 version = "0.0.1"
 
 repositories {
@@ -13,7 +12,6 @@ repositories {
 
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.6.3")
 }
 
 tasks.test {
@@ -25,12 +23,12 @@ kotlin {
 }
 
 application {
-    mainClass = "asteroid4.MainKt"
+    mainClass = "asteroid4.tileengine.MainKt"
 }
 
 tasks.jar {
     manifest {
-        attributes ["Main-Class"] = "asteroid4.MainKt"
+        attributes ["Main-Class"] = "asteroid4.tileengine.MainKt"
     }
 
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE

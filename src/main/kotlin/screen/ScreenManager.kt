@@ -1,6 +1,6 @@
-package asteroid4.screen
+package asteroid4.tileengine.screen
 
-import asteroid4.ProgramData
+import asteroid4.tileengine.ProgramData
 import java.awt.Dimension
 import javax.swing.*
 

@@ -1,7 +1,7 @@
-package asteroid4.game.world.entity
+package asteroid4.tileengine.game.world.entity
 
-import asteroid4.ProgramData
-import asteroid4.game.FloatPosition
+import asteroid4.tileengine.ProgramData
+import asteroid4.tileengine.game.FloatPosition
 
 abstract class Entity(val position: FloatPosition) {
     var health = 0f

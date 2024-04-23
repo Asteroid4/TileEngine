@@ -1,4 +1,4 @@
-package asteroid4.game
+package asteroid4.tileengine.game
 
 data class IntPosition(val x: Int, val y: Int) {
     operator fun plus(pos2: IntPosition): IntPosition {

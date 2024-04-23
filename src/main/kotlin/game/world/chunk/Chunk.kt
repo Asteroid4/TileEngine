@@ -1,7 +1,7 @@
-package asteroid4.game.world.chunk
+package asteroid4.tileengine.game.world.chunk
 
-import asteroid4.game.IntPosition
-import asteroid4.registry.RegistryKey
+import asteroid4.tileengine.game.IntPosition
+import asteroid4.tileengine.registry.RegistryKey
 
 interface Chunk {
     operator fun get(pos: IntPosition): RegistryKey?

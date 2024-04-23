@@ -1,5 +1,5 @@
-package asteroid4.game.world.entity
+package asteroid4.tileengine.game.world.entity
 
-import asteroid4.game.FloatPosition
+import asteroid4.tileengine.game.FloatPosition
 
 class ControllableEntity(position: FloatPosition) : Entity(position)

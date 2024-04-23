@@ -1,7 +1,10 @@
-package asteroid4.modloader
+package asteroid4.tileengine.modloader
 
-class TileEngineApi() {
-    fun tile() {}
+import asteroid4.tileengine.ProgramData
 
-    fun worldGenerator() {}
+open class TileEngineApi()
+
+object TileEngineApiV1: TileEngineApi() {
+    fun tile() {
+        ProgramData.LOGGER.print("api time")}
 }

@@ -1,4 +1,4 @@
-package asteroid4.game
+package asteroid4.tileengine.game
 
 data class FloatPosition(val x: Float, val y: Float) {
     operator fun plus(pos2: FloatPosition): FloatPosition {
