@@ -1,6 +1,6 @@
 package asteroid4.tileengine.game.world
 
-import asteroid4.tileengine.game.vector.IntVector
+import asteroid4.tileengine.game.math.IntVector
 import asteroid4.tileengine.game.world.chunk.Chunk
 import asteroid4.tileengine.game.world.entity.ControllableEntity
 import asteroid4.tileengine.game.world.generator.WorldGenerator

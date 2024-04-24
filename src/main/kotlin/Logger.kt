@@ -8,4 +8,8 @@ class Logger {
     fun printErr(str : String) {
         System.err.println("[TileEngine/${Thread.currentThread().name}]$str")
     }
+
+    fun newLine() {
+        println()
+    }
 }

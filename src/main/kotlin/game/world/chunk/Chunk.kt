@@ -1,6 +1,6 @@
 package asteroid4.tileengine.game.world.chunk
 
-import asteroid4.tileengine.game.vector.IntVector
+import asteroid4.tileengine.game.math.IntVector
 import asteroid4.tileengine.registry.RegistryKey
 
 interface Chunk {

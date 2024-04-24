@@ -25,8 +25,8 @@ object ProgramData {
     const val MAX_HEALTH = 100f
     val RNG = Random.Default
 
-    val SCREEN_MANAGER = ScreenManager(STARTING_WIDTH, STARTING_HEIGHT)
     val INPUT_MANAGER = InputManager()
+    val SCREEN_MANAGER = ScreenManager(STARTING_WIDTH, STARTING_HEIGHT)
     val GAME_MANAGER = GameManager()
     val MOD_LOADER = ModLoader()
     val LOGGER = Logger()

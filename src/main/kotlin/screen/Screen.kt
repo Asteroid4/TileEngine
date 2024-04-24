@@ -2,15 +2,13 @@ package asteroid4.tileengine.screen
 
 import asteroid4.tileengine.ProgramData
 import asteroid4.tileengine.Registries
-import asteroid4.tileengine.game.vector.IntVector
+import asteroid4.tileengine.game.math.IntVector
 import asteroid4.tileengine.game.world.World
 import asteroid4.tileengine.game.world.generator.NullWorldGenerator
 import asteroid4.tileengine.registry.RegistryKey
 import java.awt.Graphics
 import java.awt.Graphics2D
-import java.awt.Image
 import java.awt.event.ActionEvent
-import java.awt.image.ImageObserver
 import javax.swing.AbstractAction
 import javax.swing.JButton
 import javax.swing.JLabel
@@ -97,6 +95,9 @@ class Screen(startingScreen: ScreenType): JPanel() {
 
     init {
         currentScreen = startingScreen
+        addKeyListener(ProgramData.INPUT_MANAGER)
+        isFocusable = true
+        requestFocus()
     }
 
     override fun paintComponent(g: Graphics) {
@@ -122,7 +123,7 @@ class Screen(startingScreen: ScreenType): JPanel() {
             getScreenCenter().y - ProgramData.TILE_SIZE,
             ProgramData.TILE_SIZE,
             ProgramData.TILE_SIZE * 2,
-            ImageObserver(fun(_: Image, _: Int, _: Int, _: Int, _: Int, _: Int): Boolean { return false })
+            null
         )
     }
 
@@ -138,7 +139,7 @@ class Screen(startingScreen: ScreenType): JPanel() {
                         tileRenderingPosition.y,
                         ProgramData.TILE_SIZE,
                         ProgramData.TILE_SIZE,
-                        ImageObserver(fun(_: Image, _: Int, _: Int, _: Int, _: Int, _: Int): Boolean { return false })
+                        null
                     )
                 }
             }
@@ -153,11 +154,11 @@ class Screen(startingScreen: ScreenType): JPanel() {
         })
     }
 
-    private fun getScreenCenter(): asteroid4.tileengine.game.vector.IntVector {
+    private fun getScreenCenter(): asteroid4.tileengine.game.math.IntVector {
         return IntVector(width / 2, height / 2)
     }
 
-    private fun getTileRenderLocation(literalLocation: asteroid4.tileengine.game.vector.IntVector): asteroid4.tileengine.game.vector.IntVector {
+    private fun getTileRenderLocation(literalLocation: asteroid4.tileengine.game.math.IntVector): asteroid4.tileengine.game.math.IntVector {
         val playerPosition = ProgramData.GAME_MANAGER.currentWorld?.player?.position!! * ProgramData.TILE_SIZE
         val screenOffset = playerPosition - IntVector(width / 2, height / 2)
         return ((literalLocation * ProgramData.TILE_SIZE) - screenOffset).truncate()

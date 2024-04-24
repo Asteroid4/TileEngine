@@ -1,4 +1,4 @@
-package asteroid4.tileengine.game.vector
+package asteroid4.tileengine.game.math
 
 data class FloatVector(val x: Float, val y: Float) {
     operator fun plus(pos2: FloatVector): FloatVector {

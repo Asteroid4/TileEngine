@@ -1,7 +1,7 @@
 package asteroid4.tileengine.game.world.entity
 
 import asteroid4.tileengine.ProgramData
-import asteroid4.tileengine.game.vector.FloatVector
+import asteroid4.tileengine.game.math.FloatVector
 
 abstract class Entity(var position: FloatVector) {
     var health = 0f

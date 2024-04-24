@@ -1,7 +1,7 @@
 package asteroid4.tileengine.game.world.generator
 
-import asteroid4.tileengine.game.vector.FloatVector
-import asteroid4.tileengine.game.vector.IntVector
+import asteroid4.tileengine.game.math.FloatVector
+import asteroid4.tileengine.game.math.IntVector
 import asteroid4.tileengine.game.world.chunk.HashMapChunk
 import asteroid4.tileengine.registry.RegistryKey
 

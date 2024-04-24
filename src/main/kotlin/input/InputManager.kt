@@ -6,20 +6,18 @@ import java.awt.event.KeyListener
 class InputManager() : KeyListener {
     private val inputListeners = HashMap<Char, ArrayList<InputListener>>()
 
-    override fun keyPressed(e: KeyEvent?) {
+    override fun keyPressed(e: KeyEvent?) {}
+
+    override fun keyTyped(e: KeyEvent?) {
         if (e != null) {
-            if (e.keyChar != null) {
-                if (inputListeners[e.keyChar] == null) {
-                    inputListeners[e.keyChar] = ArrayList()
-                }
-                inputListeners[e.keyChar]!!.forEach {
-                    it.keyPressed()
-                }
+            if (inputListeners[e.keyChar] == null) {
+                inputListeners[e.keyChar] = ArrayList()
+            }
+            inputListeners[e.keyChar]!!.forEach {
+                it.keyPressed()
             }
         }
     }
-
-    override fun keyTyped(e: KeyEvent?) {}
 
     override fun keyReleased(e: KeyEvent?) {}
 

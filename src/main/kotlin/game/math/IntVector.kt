@@ -1,4 +1,4 @@
-package asteroid4.tileengine.game.vector
+package asteroid4.tileengine.game.math
 
 data class IntVector(val x: Int, val y: Int) {
     operator fun plus(pos2: IntVector): IntVector {
