@@ -6,7 +6,7 @@ import javax.script.*
 
 
 class ModLoader() {
-    private val loadedMods = HashMap<String, ModListener>()
+    private val loadedMods = HashMap<String, Pair<ModListener, TileEngineApi?>>()
 
     fun refresh() {
         loadedMods.clear()
@@ -14,17 +14,18 @@ class ModLoader() {
         File(ProgramData.WORKING_DIR + File.separatorChar + "TileEngineData" + File.separatorChar + "mods").listFiles().sorted().forEach { modFile ->
             if (modFile.isFile && modFile.extension == "jar") {
                 (ClassLoader.getSystemClassLoader() as DynamicClassLoader).add(modFile.toURI().toURL())
-                val mainClass = Class.forName(modFile.nameWithoutExtension, true, ClassLoader.getSystemClassLoader())
+                val mainClass = Class.forName("ModKt", true, ClassLoader.getSystemClassLoader())
                 val instance = mainClass.getDeclaredConstructor().newInstance() as ModListener
-                instance.loadMod(getApi(instance.getPreferredApiVersion()))
-                loadedMods[modFile.nameWithoutExtension] = instance
+                val api = getApi(modFile.nameWithoutExtension, instance.getPreferredApiVersion())
+                instance.loadMod(api)
+                loadedMods[modFile.nameWithoutExtension] = Pair(instance, api)
             }
         }
     }
 
-    private fun getApi(version: Int): TileEngineApi? {
+    private fun getApi(modName: String, version: Int): TileEngineApi? {
         return when (version) {
-            1 -> TileEngineApiV1
+            1 -> TileEngineApiV1(modName)
             else -> null
         }
     }

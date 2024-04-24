@@ -97,7 +97,6 @@ class Screen(startingScreen: ScreenType): JPanel() {
         currentScreen = startingScreen
         addKeyListener(ProgramData.INPUT_MANAGER)
         isFocusable = true
-        requestFocus()
     }
 
     override fun paintComponent(g: Graphics) {
@@ -131,7 +130,7 @@ class Screen(startingScreen: ScreenType): JPanel() {
         for (x in 0..15) {
             for (y in 0..15) {
                 val tilePosition = IntVector((chunkX * 16) + x, (chunkY * 16) + y)
-                if (ProgramData.GAME_MANAGER.getTile(tilePosition)?.isInvisible == false) {
+                if (ProgramData.GAME_MANAGER.getTile(tilePosition)?.invisible == false) {
                     val tileRenderingPosition = getTileRenderLocation(tilePosition)
                     g2.drawImage(
                         ProgramData.GAME_MANAGER.getTileImage(tilePosition),
