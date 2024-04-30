@@ -1,5 +1,6 @@
 package asteroid4.tileengine.modloader
 
+import asteroid4.tileengine.Logger
 import asteroid4.tileengine.ProgramData
 import asteroid4.tileengine.Registries
 import asteroid4.tileengine.game.world.Tile
@@ -9,7 +10,7 @@ open class TileEngineApi(val namespace: String)
 
 class TileEngineApiV1(private val modName: String): TileEngineApi(modName) {
     fun newTile(invisible: Boolean): Tile {
-        ProgramData.LOGGER.print("api time")
+        Logger.print("api time")
         return Tile(invisible)
     }
 

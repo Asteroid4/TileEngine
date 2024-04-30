@@ -1,6 +1,5 @@
 package asteroid4.tileengine.game.world.vessel.controller
 
-import asteroid4.tileengine.game.GameManager
 import asteroid4.tileengine.game.math.FloatVector
 import asteroid4.tileengine.input.InputManager
 
