@@ -2,9 +2,11 @@ package asteroid4.tileengine.screen
 
 import asteroid4.tileengine.ProgramData
 import asteroid4.tileengine.Registries
+import asteroid4.tileengine.game.GameManager
 import asteroid4.tileengine.game.math.IntVector
 import asteroid4.tileengine.game.world.World
 import asteroid4.tileengine.game.world.generator.NullWorldGenerator
+import asteroid4.tileengine.input.InputManager
 import asteroid4.tileengine.registry.RegistryKey
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -63,13 +65,6 @@ class Screen(startingScreen: ScreenType): JPanel() {
                     val title = JLabel("Mods")
                     this.add(title)
 
-                    val refreshButton = JButton(object : AbstractAction("refresh") {
-                        override fun actionPerformed(e: ActionEvent?) {
-                            ProgramData.MOD_LOADER.refresh()
-                        }
-                    })
-                    this.add(refreshButton)
-
                     val backButton = screenChangeButton("Back", ScreenType.MAIN_MENU)
                     this.add(backButton)
                 }
@@ -83,7 +78,7 @@ class Screen(startingScreen: ScreenType): JPanel() {
                 }
 
                 ScreenType.IN_GAME -> {
-                    ProgramData.GAME_MANAGER.currentWorld = World(0, NullWorldGenerator())
+                    GameManager.currentWorld = World(0, NullWorldGenerator())
                 }
 
                 ScreenType.EXIT -> exitProcess(0)
@@ -95,7 +90,7 @@ class Screen(startingScreen: ScreenType): JPanel() {
 
     init {
         currentScreen = startingScreen
-        addKeyListener(ProgramData.INPUT_MANAGER)
+        addKeyListener(InputManager)
         isFocusable = true
     }
 
@@ -103,7 +98,7 @@ class Screen(startingScreen: ScreenType): JPanel() {
         super.paintComponent(g)
         if (currentScreen == ScreenType.IN_GAME) {
             val g2 = g as Graphics2D
-            val playerIntPos = ProgramData.GAME_MANAGER.currentWorld?.player?.position?.truncate()
+            val playerIntPos = GameManager.currentWorld?.player?.position?.truncate()
             if (playerIntPos != null) {
                 for (chunkX in (playerIntPos.x - 2)..(playerIntPos.x + 2)) {
                     for (chunkY in (playerIntPos.y - 2)..(playerIntPos.y + 2)) {
@@ -130,10 +125,10 @@ class Screen(startingScreen: ScreenType): JPanel() {
         for (x in 0..15) {
             for (y in 0..15) {
                 val tilePosition = IntVector((chunkX * 16) + x, (chunkY * 16) + y)
-                if (ProgramData.GAME_MANAGER.getTile(tilePosition)?.invisible == false) {
+                if (GameManager.getTile(tilePosition)?.invisible == false) {
                     val tileRenderingPosition = getTileRenderLocation(tilePosition)
                     g2.drawImage(
-                        ProgramData.GAME_MANAGER.getTileImage(tilePosition),
+                        GameManager.getTileImage(tilePosition),
                         tileRenderingPosition.x,
                         tileRenderingPosition.y,
                         ProgramData.TILE_SIZE,
@@ -158,7 +153,7 @@ class Screen(startingScreen: ScreenType): JPanel() {
     }
 
     private fun getTileRenderLocation(literalLocation: asteroid4.tileengine.game.math.IntVector): asteroid4.tileengine.game.math.IntVector {
-        val playerPosition = ProgramData.GAME_MANAGER.currentWorld?.player?.position!! * ProgramData.TILE_SIZE
+        val playerPosition = GameManager.currentWorld?.player?.position!! * ProgramData.TILE_SIZE
         val screenOffset = playerPosition - IntVector(width / 2, height / 2)
         return ((literalLocation * ProgramData.TILE_SIZE) - screenOffset).truncate()
     }

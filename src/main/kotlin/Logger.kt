@@ -1,6 +1,6 @@
 package asteroid4.tileengine
 
-class Logger {
+object Logger {
     fun print(str : String) {
         println("[TileEngine/${Thread.currentThread().name}]$str")
     }

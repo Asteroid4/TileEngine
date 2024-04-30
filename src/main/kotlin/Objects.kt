@@ -19,17 +19,11 @@ object ProgramData {
     val WORKING_DIR: String = System.getProperty("user.dir")
     const val MAX_FPS = 60
     const val MAX_TPS = 20
-    private const val STARTING_WIDTH = 768
-    private const val STARTING_HEIGHT = 512
+    const val STARTING_WIDTH = 768
+    const val STARTING_HEIGHT = 512
     const val TILE_SIZE = 64
     const val MAX_HEALTH = 100f
     val RNG = Random.Default
-
-    val INPUT_MANAGER = InputManager()
-    val SCREEN_MANAGER = ScreenManager(STARTING_WIDTH, STARTING_HEIGHT)
-    val GAME_MANAGER = GameManager()
-    val MOD_LOADER = ModLoader()
-    val LOGGER = Logger()
 }
 
 object Registries {

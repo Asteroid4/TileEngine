@@ -4,13 +4,13 @@ import asteroid4.tileengine.ProgramData
 import java.awt.Dimension
 import javax.swing.*
 
-class ScreenManager(startingWidth: Int, startingHeight: Int) {
+object ScreenManager {
     private var frame = JFrame(ProgramData.PROGRAM_NAME)
     private var screen = Screen(ScreenType.MAIN_MENU)
 
     init {
         frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        frame.size = Dimension(startingWidth, startingHeight)
+        frame.size = Dimension(ProgramData.STARTING_WIDTH, ProgramData.STARTING_HEIGHT)
 
         frame.contentPane = screen
         frame.isVisible = true

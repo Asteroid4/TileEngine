@@ -5,10 +5,10 @@ import java.io.File
 import javax.script.*
 
 
-class ModLoader() {
+object ModLoader {
     private val loadedMods = HashMap<String, Pair<ModListener, TileEngineApi?>>()
 
-    fun refresh() {
+    fun init() {
         loadedMods.clear()
         println(File(ProgramData.WORKING_DIR + File.separatorChar + "TileEngineData" + File.separatorChar + "mods").listFiles())
         File(ProgramData.WORKING_DIR + File.separatorChar + "TileEngineData" + File.separatorChar + "mods").listFiles().sorted().forEach { modFile ->

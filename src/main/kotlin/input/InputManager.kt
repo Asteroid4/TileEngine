@@ -3,7 +3,7 @@ package asteroid4.tileengine.input
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 
-class InputManager() : KeyListener {
+object InputManager : KeyListener {
     private val inputListeners = HashMap<Char, ArrayList<InputListener>>()
 
     override fun keyPressed(e: KeyEvent?) {}
@@ -21,7 +21,7 @@ class InputManager() : KeyListener {
 
     override fun keyReleased(e: KeyEvent?) {}
 
-    fun register(char : Char, listener : InputListener) {
+    fun register(char: Char, listener: InputListener) {
         if (inputListeners[char] == null) {
             inputListeners[char] = ArrayList()
         }

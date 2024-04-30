@@ -1,17 +1,21 @@
 package asteroid4.tileengine
 
+import asteroid4.tileengine.game.GameManager
+import asteroid4.tileengine.modloader.ModLoader
+import asteroid4.tileengine.screen.ScreenManager
 import java.io.File
 import kotlin.time.DurationUnit
 import kotlin.time.measureTime
 
 fun main() {
+    ModLoader.init()
     val basePath = ProgramData.WORKING_DIR + File.separatorChar + "TileEngineData" + File.separatorChar
     verifyFolder(basePath + "mods")
     val renderThread = Thread({
         while (!Thread.currentThread().isInterrupted) {
             try {
                 val frameDelta = measureTime {
-                    ProgramData.SCREEN_MANAGER.frame()
+                    ScreenManager.frame()
                 }.toDouble(DurationUnit.MILLISECONDS)
                 val maxFrameDelta = 1000 / ProgramData.MAX_FPS
                 if (frameDelta < 1000 / maxFrameDelta) {
@@ -25,10 +29,10 @@ fun main() {
     val gameThread = Thread({
         while (!Thread.currentThread().isInterrupted) {
             try {
-                if (ProgramData.SCREEN_MANAGER.shouldBeInUnpausedGame()) {
-                    if (ProgramData.GAME_MANAGER.currentWorld == null) ProgramData.LOGGER.printErr("World not initialized during gameplay!")
+                if (ScreenManager.shouldBeInUnpausedGame()) {
+                    if (GameManager.currentWorld == null) Logger.printErr("World not initialized during gameplay!")
                     val tickDelta = measureTime {
-                        ProgramData.GAME_MANAGER.tick()
+                        GameManager.tick()
                     }.toDouble(DurationUnit.MILLISECONDS)
                     val maxTickDelta = 1000 / ProgramData.MAX_TPS
                     if (tickDelta < 1000 / maxTickDelta) {
