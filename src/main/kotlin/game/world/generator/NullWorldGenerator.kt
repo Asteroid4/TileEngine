@@ -1,17 +1,18 @@
 package asteroid4.tileengine.game.world.generator
 
-import asteroid4.tileengine.game.FloatPosition
-import asteroid4.tileengine.game.IntPosition
+import asteroid4.tileengine.Logger
+import asteroid4.tileengine.game.math.FloatVector
+import asteroid4.tileengine.game.math.IntVector
 import asteroid4.tileengine.game.world.chunk.HashMapChunk
 import asteroid4.tileengine.registry.RegistryKey
 
 class NullWorldGenerator : WorldGenerator {
-    override fun generateChunk(worldSeed: Int, chunkPos: IntPosition): HashMapChunk {
-        if (chunkPos.y >= 0) return HashMapChunk(RegistryKey("required", "tile", "air"))
+    override fun generateChunk(worldSeed: Int, chunkPos: IntVector): HashMapChunk {
+        if (chunkPos.y < 0) return HashMapChunk(RegistryKey("required", "tile", "air"))
         return HashMapChunk(RegistryKey("required", "tile", "unraveling_fabric"))
     }
 
-    override fun getPlayerStartLocation(worldSeed: Int): FloatPosition {
-        return FloatPosition(0f, 0f)
+    override fun getPlayerStartLocation(worldSeed: Int): FloatVector {
+        return FloatVector(0f, 0f)
     }
 }
