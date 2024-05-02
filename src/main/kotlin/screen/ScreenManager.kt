@@ -2,7 +2,7 @@ package asteroid4.tileengine.screen
 
 import asteroid4.tileengine.ProgramData
 import java.awt.Dimension
-import javax.swing.*
+import javax.swing.JFrame
 
 object ScreenManager {
     private var frame = JFrame(ProgramData.PROGRAM_NAME)
@@ -17,6 +17,4 @@ object ScreenManager {
     }
 
     fun shouldBeInUnpausedGame(): Boolean = screen.currentScreen == ScreenType.IN_GAME
-
-    fun frame() = screen.repaint()
 }

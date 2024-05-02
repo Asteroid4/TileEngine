@@ -153,8 +153,8 @@ class Screen(startingScreen: ScreenType): JPanel() {
     }
 
     private fun getRenderLocation(globalLocation: asteroid4.tileengine.game.math.FloatVector) =
-        ((globalLocation - GameManager.currentWorld?.player?.position!!) * ProgramData.TILE_SIZE).truncate()
+        ((globalLocation - GameManager.currentWorld?.player?.position!!.flipY()) * ProgramData.TILE_SIZE).truncate()
 
     private fun getGlobalLocation(renderLocation: asteroid4.tileengine.game.math.IntVector) =
-        (renderLocation.untruncate() / ProgramData.TILE_SIZE) + GameManager.currentWorld?.player?.position!!
+        (renderLocation.untruncate() / ProgramData.TILE_SIZE) + GameManager.currentWorld?.player?.position!!.flipY()
 }

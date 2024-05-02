@@ -15,13 +15,13 @@ fun main() {
         while (!Thread.currentThread().isInterrupted) {
             try {
                 val frameDelta = measureTime {
-                    ScreenManager.frame()
+                    ScreenManager.screen.repaint()
                 }.toDouble(DurationUnit.MILLISECONDS)
                 val maxFrameDelta = 1000 / ProgramData.MAX_FPS
                 if (frameDelta < 1000 / maxFrameDelta) {
                     Thread.sleep((maxFrameDelta - frameDelta).toLong())
                 }
-            } catch (e: InterruptedException) {
+            } catch (_: InterruptedException) {
                 Thread.currentThread().interrupt()
             }
         }
@@ -39,7 +39,7 @@ fun main() {
                         Thread.sleep((maxTickDelta - tickDelta).toLong())
                     }
                 }
-            } catch (e: InterruptedException) {
+            } catch (_: InterruptedException) {
                 Thread.currentThread().interrupt()
             }
         }

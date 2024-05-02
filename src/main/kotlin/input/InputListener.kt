@@ -1,5 +1,9 @@
 package asteroid4.tileengine.input
 
-fun interface InputListener {
+interface InputListener {
     fun keyPressed()
+
+    fun keyTyped()
+
+    fun keyReleased()
 }

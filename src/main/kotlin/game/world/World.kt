@@ -1,6 +1,5 @@
 package asteroid4.tileengine.game.world
 
-import asteroid4.tileengine.ProgramData
 import asteroid4.tileengine.game.math.FloatVector
 import asteroid4.tileengine.game.math.IntVector
 import asteroid4.tileengine.game.world.chunk.Chunk
@@ -47,5 +46,5 @@ class World(private val seed: Int, private val generator: WorldGenerator) {
         return generatedChunks.toTypedArray()
     }
 
-    fun getChunkPos(tilePos: FloatVector) = tilePos.truncate() / 16
+    private fun getChunkPos(tilePos: FloatVector) = tilePos.truncate() / 16
 }

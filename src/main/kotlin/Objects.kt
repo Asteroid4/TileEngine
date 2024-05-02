@@ -23,6 +23,7 @@ object ProgramData {
     const val STARTING_HEIGHT = 512
     const val TILE_SIZE = 64
     const val MAX_HEALTH = 100f
+    const val PLAYER_SPEED = 0.1f
     val RNG = Random.Default
 }
 
@@ -34,10 +35,17 @@ object Registries {
     init {
         var img: BufferedImage? = null;
         try {
-            img = ImageIO.read(ClassLoader.getSystemResource("unraveling_fabric.png"))
+            img = ImageIO.read(ClassLoader.getSystemResource("dev_tile.png"))
         } catch (_: IOException) {
         }
         IMAGE_REGISTRY = Registry(img!!)
         TILE_REGISTRY.register(RegistryKey("required", "tile", "air"), Tile(true))
     }
+}
+
+object KeyBinds {
+    const val PLAYER_JUMP = 'w'
+    const val PLAYER_LEFT = 'a'
+    const val PLAYER_RIGHT = 'd'
+    const val PLAYER_CROUCH = 's'
 }
