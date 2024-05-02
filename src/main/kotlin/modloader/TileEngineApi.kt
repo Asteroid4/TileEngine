@@ -6,11 +6,11 @@ import asteroid4.tileengine.Registries
 import asteroid4.tileengine.game.world.Tile
 import asteroid4.tileengine.registry.RegistryKey
 
-open class TileEngineApi(val namespace: String)
+abstract class TileEngineApi(val namespace: String)
 
 class TileEngineApiV1(private val modName: String): TileEngineApi(modName) {
     fun newTile(invisible: Boolean): Tile {
-        Logger.print("api time")
+        Logger.print(modName, "api time")
         return Tile(invisible)
     }
 

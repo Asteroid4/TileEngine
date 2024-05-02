@@ -10,8 +10,7 @@ object GameManager {
     var currentWorld: World? = null
 
     fun tick() {
-        if (currentWorld == null) return
-        currentWorld!!.player.tick()
+        currentWorld?.tick()
     }
 
     fun getTile(blockPos: IntVector): Tile? = Registries.TILE_REGISTRY[currentWorld?.chunks?.get(blockPos / 16)

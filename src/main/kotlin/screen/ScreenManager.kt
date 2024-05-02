@@ -6,7 +6,7 @@ import javax.swing.*
 
 object ScreenManager {
     private var frame = JFrame(ProgramData.PROGRAM_NAME)
-    private var screen = Screen(ScreenType.MAIN_MENU)
+    val screen = Screen(ScreenType.MAIN_MENU)
 
     init {
         frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE

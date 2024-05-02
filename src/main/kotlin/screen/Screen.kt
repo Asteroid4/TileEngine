@@ -98,14 +98,7 @@ class Screen(startingScreen: ScreenType): JPanel() {
         super.paintComponent(g)
         if (currentScreen == ScreenType.IN_GAME) {
             val g2 = g as Graphics2D
-            val playerIntPos = GameManager.currentWorld?.player?.position?.truncate()
-            if (playerIntPos != null) {
-                for (chunkX in (playerIntPos.x - 2)..(playerIntPos.x + 2)) {
-                    for (chunkY in (playerIntPos.y - 2)..(playerIntPos.y + 2)) {
-                        renderChunk(g2, chunkX, chunkY)
-                    }
-                }
-            }
+            GameManager.currentWorld?.getLoadedChunks()?.forEach { chunkPos -> renderChunk(g2, chunkPos.x, chunkPos.y) }
             renderPlayer(g2)
         }
     }
@@ -119,6 +112,7 @@ class Screen(startingScreen: ScreenType): JPanel() {
             ProgramData.TILE_SIZE * 2,
             null
         )
+        g2.drawString(GameManager.currentWorld?.player?.position.toString(), 10, 10)
     }
 
     private fun renderChunk(g2: Graphics2D, chunkX: Int, chunkY: Int) {
@@ -126,7 +120,7 @@ class Screen(startingScreen: ScreenType): JPanel() {
             for (y in 0..15) {
                 val tilePosition = IntVector((chunkX * 16) + x, (chunkY * 16) + y)
                 if (GameManager.getTile(tilePosition)?.invisible == false) {
-                    val tileRenderingPosition = getTileRenderLocation(tilePosition)
+                    val tileRenderingPosition = getRenderLocation(tilePosition.untruncate())
                     g2.drawImage(
                         GameManager.getTileImage(tilePosition),
                         tileRenderingPosition.x,
@@ -152,9 +146,15 @@ class Screen(startingScreen: ScreenType): JPanel() {
         return IntVector(width / 2, height / 2)
     }
 
-    private fun getTileRenderLocation(literalLocation: asteroid4.tileengine.game.math.IntVector): asteroid4.tileengine.game.math.IntVector {
-        val playerPosition = GameManager.currentWorld?.player?.position!! * ProgramData.TILE_SIZE
-        val screenOffset = playerPosition - IntVector(width / 2, height / 2)
-        return ((literalLocation * ProgramData.TILE_SIZE) - screenOffset).truncate()
+    //TODO: Make better name
+    fun getScreenCornerGlobalPositions(): Array<asteroid4.tileengine.game.math.FloatVector> {
+        val corners = arrayOf(IntVector(0, 0), IntVector(width, height))
+        return corners.map { corner -> getGlobalLocation(corner) }.toTypedArray()
     }
+
+    private fun getRenderLocation(globalLocation: asteroid4.tileengine.game.math.FloatVector) =
+        ((globalLocation - GameManager.currentWorld?.player?.position!!) * ProgramData.TILE_SIZE).truncate()
+
+    private fun getGlobalLocation(renderLocation: asteroid4.tileengine.game.math.IntVector) =
+        (renderLocation.untruncate() / ProgramData.TILE_SIZE) + GameManager.currentWorld?.player?.position!!
 }

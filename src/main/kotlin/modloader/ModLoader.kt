@@ -10,8 +10,8 @@ object ModLoader {
 
     fun init() {
         loadedMods.clear()
-        println(File(ProgramData.WORKING_DIR + File.separatorChar + "TileEngineData" + File.separatorChar + "mods").listFiles())
-        File(ProgramData.WORKING_DIR + File.separatorChar + "TileEngineData" + File.separatorChar + "mods").listFiles().sorted().forEach { modFile ->
+        File(ProgramData.WORKING_DIR + File.separatorChar + "TileEngineData" + File.separatorChar + "mods").listFiles()
+            .sorted().forEach { modFile ->
             if (modFile.isFile && modFile.extension == "jar") {
                 (ClassLoader.getSystemClassLoader() as DynamicClassLoader).add(modFile.toURI().toURL())
                 val mainClass = Class.forName("ModKt", true, ClassLoader.getSystemClassLoader())
@@ -23,10 +23,8 @@ object ModLoader {
         }
     }
 
-    private fun getApi(modName: String, version: Int): TileEngineApi? {
-        return when (version) {
-            1 -> TileEngineApiV1(modName)
-            else -> null
-        }
+    private fun getApi(modName: String, version: Int) = when (version) {
+        1 -> TileEngineApiV1(modName)
+        else -> null
     }
 }

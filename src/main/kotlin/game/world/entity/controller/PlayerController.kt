@@ -1,9 +1,9 @@
-package asteroid4.tileengine.game.world.vessel.controller
+package asteroid4.tileengine.game.world.entity.controller
 
 import asteroid4.tileengine.game.math.FloatVector
 import asteroid4.tileengine.input.InputManager
 
-class PlayerController(): Controller() {
+class PlayerController : Controller() {
     private var velocity = FloatVector(0f, 0f)
 
     init {
